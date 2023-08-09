@@ -4,12 +4,14 @@ A model to define all base attributes and methods
 
 import uuid
 import datetime
+from models import storage
 
 class BaseModel():
     """
     A class to pass basic attributes
     """
-    def __init__(self):
+
+    def __init__(self, *args, **kwargs):
         """
         Initiating an instance...
 
@@ -22,9 +24,25 @@ class BaseModel():
         updated_at: date of the instance in which it has
         been updated.
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        if kwargs is not None and kwargs != {}:
+            for key, value in kwargs.items():
+                if key == 'created_at':
+                    self.__dict__['created_at'] = datetime.datetime.strptime(
+                        value, "%Y-%m-%dT%H:%M:%S.%f"
+                    )
+                elif key == 'updated_at':
+                    self.__dict__['updated_at'] = datetime.datetime.strptime(
+                        value, "%Y-%m-%dT%H:%M:%S.%f"
+                    )
+                elif key == '__class__':
+                    continue
+                else:
+                    self.__dict__[key] = kwargs[key]
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """
@@ -33,13 +51,14 @@ class BaseModel():
         """
         return ("[{}] ({}) {}"
                 .format(type(self).__name__, self.id, self.__dict__))
-    
+
     def save(self):
         """
         Updates the updated_at attribute with the
         current date.
         """
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
