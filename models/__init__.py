@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 A unique filestorage instance for the application
 """
