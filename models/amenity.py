@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 """
-module contains amenity information and its methods
+Amenity module and it's methods
 """
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
     """
-    class with amenity information
-    inherits from BaseModel class
+    Identify Amenity class and it's attributes:
+    @name: name of the class.
     """
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """constructor method
-           being called everytime
-           new instance create
+        """
+        Initiate a new instance and make it
+        inheritis all attributes from baseModel
+        Class.
         """
         super().__init__(*args, **kwargs)

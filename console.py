@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """
-console Program that contains the entry
-point of the command interpreter
+My cosnole program:
+  start it by running the file (console.py)
+  type help to see list of commands.
+  type help <command> to see the command dict.
 """
 
 
@@ -19,7 +21,11 @@ import json
 
 
 class HBNBCommand(cmd.Cmd):
-    """defines each command"""
+    """
+    Class to run the program using cmd
+    module.
+    Defines all commands.
+    """
     prompt = "(hbnb) "
 
     dict_model = {
@@ -30,8 +36,9 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def default(HBNBCommand, line):
-        """default method to customise
-           how thing should works
+        """
+        First default method to customise
+        the Program.
         """
         cmnd_dict = {
                 "all": HBNBCommand.do_all,
@@ -84,56 +91,62 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def do_quit(self, line):
-        '''exit the program'''
+        """Exit the program using quit command"""
         return True
 
     def do_EOF(self, line):
-        '''exit the program'''
+        """
+        Exits the program using Ctrl+C or
+        Ctrl+D
+        """
         return True
 
     def do_create(self, line):
-        ''' Creates a new instance of BaseModel '''
+        """
+        A command to create a new instance
+        of BaseModel class
+        """
         if line == '':
             print('** class name missing **')
             return
 
         else:
-            for cl, val in HBNBCommand.dict_model.items():
-                if cl == line:
-                    obj = val()
-                    print(obj.id)
-                    obj.save()
+            for cls, val in HBNBCommand.dict_model.items():
+                if cls == line:
+                    objct = val()
+                    print(objct.id)
+                    objct.save()
                     return
             print("** class doesn't exist **")
 
     def do_show(self, line):
-        ''' Prints the string representation of
-            an instance based on the class name
         '''
-        if line == '':
-            print('** class name missing **')
+        Prints a string rep. of an instance.
+        '''
+        if line == "":
+            print("** class name missing **")
             return
-        args = line.split()
+        arguments = line.split()
 
-        if HBNBCommand.dict_model.get(args[0]) is None:
+        if HBNBCommand.dict_model.get(arguments[0]) is None:
             print("** class doesn't exist **")
             return
-        elif len(args) == 1:
-            print('** instance id missing **')
+        elif len(arguments) == 1:
+            print("** instance id missing **")
             return
         else:
-            '''storage.reload()'''
-            obj = storage.all()
+            """Reload storage"""
+            objct = storage.all()
             j = 0
-            ky = args[0] + '.' + args[1]
-            if obj.get(ky) is None:
+            ky = arguments[0] + '.' + arguments[1]
+            if objct.get(ky) is None:
                 print('** no instance found **')
             else:
-                print(obj.get(ky))
+                print(objct.get(ky))
 
     def do_destroy(self, line):
-        '''Deletes an instance based on the class name and id'''
-        if line == '':
+        """Deletes an instance Using ID and UserName"""
+        if line == "":
             print('** class name missing **')
             return
         args = line.split()
@@ -155,15 +168,15 @@ class HBNBCommand(cmd.Cmd):
                 dict1 = {}
                 for k, v in obj.items():
                     dict1[k] = v.to_dict()
-                with open('file.json', 'w') as fh:
-                    json.dump(dict1, fh)
+                with open("file.json", "w") as f:
+                    json.dump(dict1, f)
 
     def do_all(self, line):
-        ''' Prints all string representation of all
-            instances based or not on the class name
-        '''
+        """
+        Prints all str rep. of all instances.
+        """
         obj = storage.all()
-        if line == '':
+        if line == "":
             lst = []
             for key, value in obj.items():
                 lst.append(value.__str__())
@@ -173,52 +186,53 @@ class HBNBCommand(cmd.Cmd):
             if HBNBCommand.dict_model.get(line) is None:
                 print("** class doesn't exist **")
                 return
-            lst = []
+            array = []
             for key, value in obj.items():
                 if line in key:
-                    lst.append(value.__str__())
-            print(lst)
+                    array.append(value.__str__())
+            print(array)
 
     def do_update(self, line):
-        '''  Updates an instance based on the class name
-             and id by adding or updating attribute
-             (save the change into the JSON file).
-        '''
-        if line == '':
+        """
+        Updates an instance Using className
+        and id, adding or updatin attributes.
+        (save the change into the JSON file).
+        """
+        if line == "":
             print('** class name missing **')
             return
-        args = line.split()
-        if HBNBCommand.dict_model.get(args[0]) is None:
+        arguments = line.split()
+        if HBNBCommand.dict_model.get(arguments[0]) is None:
             print("** class doesn't exist **")
             return
-        elif len(args) == 1:
+        elif len(arguments) == 1:
             print('** instance id missing **')
             return
         else:
             obj = storage.all()
             j = 0
-            ky = args[0] + '.' + args[1]
+            ky = arguments[0] + "." + arguments[1]
             if obj.get(ky) is None:
                 print('** no instance found **')
                 return
-            if len(args) == 2:
+            if len(arguments) == 2:
                 print("** attribute name missing **")
                 return
-            if len(args) == 3:
+            if len(arguments) == 3:
                 print("** value missing **")
                 return
-            if args[2] == "id" or args[2] == "created_at"\
-                    or args[2] == "updated_at":
+            if arguments[2] == "id" or arguments[2] == "created_at"\
+                    or arguments[2] == "updated_at":
                 return
-            var = obj[ky]
-            '''set attribute'''
-            attr = args[2]
+            variable = obj[ky]
+            """set new attribute"""
+            attr = arguments[2]
             try:
-                att_value = eval(args[3])
+                att_value = eval(arguments[3])
             except Exception:
-                att_value = args[3]
-            setattr(var, attr, att_value)
-            var.save()
+                att_value = arguments[3]
+            setattr(variable, attr, att_value)
+            variable.save()
 
     def do_count(self, line):
         """count number of instance of specific class"""
@@ -228,9 +242,9 @@ class HBNBCommand(cmd.Cmd):
         elif HBNBCommand.dict_model.get(line) is None:
             print("** class doesn't exist **")
             return False
-        obj = storage.all()
+        objct = storage.all()
         count = 0
-        for key in obj.keys():
+        for key in objct.keys():
             if line in key:
                 count += 1
         print(count)

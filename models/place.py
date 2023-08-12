@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-module contains place information and properties
+module contains place information about place.
 """
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
     """
-    place class with attributes
+    Place class that holds info about the location.
     """
     city_id = ""
     user_id = ""
@@ -22,5 +22,7 @@ class Place(BaseModel):
     amenity_ids = []
 
     def __init__(self, *args, **kwargs):
-        """constructor method"""
+        """
+        Initiate class and inherits from BaseModel
+        """
         super().__init__(*args, **kwargs)

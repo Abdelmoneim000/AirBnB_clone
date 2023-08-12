@@ -7,8 +7,8 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """
-       class controlling user details
-       inherits from BaseModel class
+    Identifying the class User and it's
+    Basic attributes
     """
     email = ''
     password = ''
@@ -16,9 +16,8 @@ class User(BaseModel):
     last_name = ''
 
     def __init__(self, *args, **kwargs):
-        """ construct method
-            called every time new
-            instance created
+        """
+        Initiate class and inherits from BaseModel
         """
         super().__init__(*args, **kwargs)
     

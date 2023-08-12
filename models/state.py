@@ -1,16 +1,18 @@
 #!/usr/bin/python3
 """
-module contains state class and its methods
+Module that contains the State class.
 """
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
     """
-    class that stores state
+    Identifying State class with it's attributes.
     """
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """constructor method"""
+        """
+        Initiate class and inherits from BaseModel
+        """
         super().__init__(*args, **kwargs)
