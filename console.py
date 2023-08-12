@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 console Program that contains the entry
 point of the command interpreter
@@ -18,61 +19,61 @@ import json
 
 
 class HBNBCommand(cmd.Cmd):
-    ''' defines each command'''
-    prompt = '(hbnb) '
+    """defines each command"""
+    prompt = "(hbnb) "
 
-    dict_cls = {
+    dict_model = {
             'BaseModel': BaseModel,
             'User': User, 'Place': Place,
             'State': State, 'City': City,
             'Amenity': Amenity, 'Review': Review
     }
 
-    def default(self, line):
+    def default(HBNBCommand, line):
         """default method to customise
            how thing should works
         """
         cmnd_dict = {
-                "all": self.do_all,
-                "show": self.do_show,
-                "destroy": self.do_destroy,
-                "count": self.do_count,
-                "update": self.do_update
+                "all": HBNBCommand.do_all,
+                "show": HBNBCommand.do_show,
+                "destroy": HBNBCommand.do_destroy,
+                "count": HBNBCommand.do_count,
+                "update": HBNBCommand.do_update
         }
-        args = line.split('.')
+        args = line.split(".")
         try:
             if len(args) != 2:
                 print(f"*** Unknown syntax: {line}")
                 return False
-            if HBNBCommand.dict_cls.get(args[0]) is None:
+            if HBNBCommand.dict_model.get(args[0]) is None:
                 print(f"** class doesn't exist **")
                 return False
-            cmds = args[1].split('(')
-            if len(cmds) != 2:
+            commandss = args[1].split("(")
+            if len(commandss) != 2:
                 print(f"*** Unknown syntax: {line}")
                 return False
             arg_line = args[0]
-            if len(cmds[1]) > 1:
-                cmds[1] = '(' + cmds[1]
-                cmds[1] = cmds[1][:-1]
-                cmds[1] = cmds[1] + ',)'
-                cmds_tuple = eval(cmds[1])
-                if len(cmds_tuple) > 1 and type(cmds_tuple[1]) is dict:
-                    arg_line += ' ' + cmds_tuple[0]
-                    for ky, vl in cmds_tuple[1].items():
+            if len(commandss[1]) > 1:
+                commandss[1] = '(' + commandss[1]
+                commandss[1] = commandss[1][:-1]
+                commandss[1] = commandss[1] + ",)"
+                commands_tuple = eval(commandss[1])
+                if len(commands_tuple) > 1 and type(commands_tuple[1]) is dict:
+                    arg_line += ' ' + commands_tuple[0]
+                    for key, value in commands_tuple[1].items():
                         update_str = arg_line
-                        update_str += ' ' + str(ky) + ' ' + str(vl)
-                        for k, v in cmnd_dict.items():
-                            if k == cmds[0]:
-                                v(update_str)
+                        update_str += " " + str(key) + " " + str(value)
+                        for ky, vl in cmnd_dict.items():
+                            if ky == commandss[0]:
+                                vl(update_str)
                                 break
                     return
-                for i in cmds_tuple:
-                    arg_line += ' ' + i
+                for i in commands_tuple:
+                    arg_line += " " + i
             flag = 0
-            for k, v in cmnd_dict.items():
-                if k == cmds[0]:
-                    v(arg_line)
+            for ky, vl in cmnd_dict.items():
+                if ky == commandss[0]:
+                    vl(arg_line)
                     flag = 1
                     break
             if flag == 0:
@@ -97,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            for cl, val in HBNBCommand.dict_cls.items():
+            for cl, val in HBNBCommand.dict_model.items():
                 if cl == line:
                     obj = val()
                     print(obj.id)
@@ -114,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
             return
         args = line.split()
 
-        if HBNBCommand.dict_cls.get(args[0]) is None:
+        if HBNBCommand.dict_model.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -136,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         args = line.split()
-        if HBNBCommand.dict_cls.get(args[0]) is None:
+        if HBNBCommand.dict_model.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -169,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
             print(lst)
 
         else:
-            if HBNBCommand.dict_cls.get(line) is None:
+            if HBNBCommand.dict_model.get(line) is None:
                 print("** class doesn't exist **")
                 return
             lst = []
@@ -187,7 +188,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         args = line.split()
-        if HBNBCommand.dict_cls.get(args[0]) is None:
+        if HBNBCommand.dict_model.get(args[0]) is None:
             print("** class doesn't exist **")
             return
         elif len(args) == 1:
@@ -224,7 +225,7 @@ class HBNBCommand(cmd.Cmd):
         if line == "":
             print('** class name missing **')
             return False
-        elif HBNBCommand.dict_cls.get(line) is None:
+        elif HBNBCommand.dict_model.get(line) is None:
             print("** class doesn't exist **")
             return False
         obj = storage.all()
