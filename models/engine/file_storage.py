@@ -8,6 +8,7 @@ import datetime
 import os
 from models.base_model import BaseModel
 
+
 class FileStorage:
     """
     A class to serialize instances to a JSON file
