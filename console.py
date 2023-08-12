@@ -6,7 +6,6 @@ an entry point.
 import cmd
 
 
-
 class HBNBCommand(cmd.Cmd):
     """
     Initiates the class for Cmd module
