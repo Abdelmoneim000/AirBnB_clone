@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 A model to define all base attributes and methods
 """

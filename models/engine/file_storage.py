@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+Module to set the storage of the
+program
+"""
 import json
 import datetime
 import os
