@@ -2,3 +2,4 @@ practice.py
 models/__pycache__
 models/engine/__pycache__
 *.json
+web_static/check
